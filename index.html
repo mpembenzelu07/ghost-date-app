@@ -3,294 +3,372 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>GhostDate TZ - Private Discovery</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Find Love. Your Way. | Private Discovery</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0b0c10;
-    --card: #15171e;
-    --card-hover: #1c1f28;
-    --accent: #ff4757;
-    --accent-hover: #ff6b81;
-    --text: #ffffff;
+    --bg: #0a0b10;
+    --surface: #12141c;
+    --surface-hover: #1a1d27;
+    --primary: #6c5ce7;
+    --primary-hover: #5a4bcf;
+    --text: #f1f2f6;
     --text-muted: #8b92a5;
-    --border: #232634;
-    --whatsapp: #25D366;
+    --border: #242836;
+    --success: #00b894;
+    --danger: #ff4757;
+    --warning: #fdcb6e;
   }
-  * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+  * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
   body { 
     background-color: var(--bg); 
     color: var(--text); 
-    margin: 0; 
-    padding: 20px; 
     display: flex; 
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: center; 
+    padding: 20px;
     min-height: 100vh;
   }
-  .app-container { width: 100%; max-width: 480px; }
+  .app { width: 100%; max-width: 520px; }
   
   /* Header */
-  .header { text-align: center; margin-bottom: 25px; }
-  .header h1 { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
-  .header p { color: var(--text-muted); font-size: 14px; margin-top: 5px; }
-  
+  .brand { text-align: center; margin-bottom: 25px; }
+  .brand h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+  .brand p { color: var(--text-muted); font-size: 13px; margin-top: 5px; }
+
   /* Cards */
   .card { 
-    background: var(--card); 
+    background: var(--surface); 
     border: 1px solid var(--border); 
     border-radius: 16px; 
     padding: 24px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
     animation: fadeIn 0.4s ease-out;
   }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  
-  /* Inputs */
-  .input-group { margin-bottom: 15px; }
-  label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
+  .card-title { font-size: 16px; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+
+  /* Forms */
+  .input-group { margin-bottom: 16px; }
+  label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
   input, select { 
-    width: 100%; 
-    padding: 12px 15px; 
-    background: #0f1117; 
-    border: 1px solid var(--border); 
-    color: var(--text); 
-    border-radius: 10px; 
-    font-size: 14px;
-    transition: 0.2s;
+    width: 100%; padding: 12px 14px; background: #090a0f; border: 1px solid var(--border); 
+    color: var(--text); border-radius: 10px; font-size: 14px; transition: 0.2s;
   }
-  input:focus, select:focus { outline: none; border-color: var(--accent); }
-  .row { display: flex; gap: 10px; }
-  .row .input-group { flex: 1; }
+  input:focus, select:focus { outline: none; border-color: var(--primary); }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
   /* Buttons */
   button { 
-    background: var(--accent); 
-    color: white; 
-    border: none; 
-    padding: 14px; 
-    width: 100%; 
-    border-radius: 10px; 
-    font-size: 15px; 
-    font-weight: 600; 
-    cursor: pointer; 
-    transition: 0.2s;
-    margin-top: 10px;
+    background: var(--primary); color: white; border: none; padding: 14px; 
+    width: 100%; border-radius: 10px; font-size: 15px; font-weight: 600; 
+    cursor: pointer; transition: 0.2s; margin-top: 10px;
   }
-  button:hover { background: var(--accent-hover); transform: translateY(-1px); }
-  button.wa-btn { background: var(--whatsapp); color: #000; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px;}
-  button.wa-btn:hover { background: #20bd5a; }
-  button.outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
-  button.outline:hover { background: var(--border); }
-  button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  button:hover { background: var(--primary-hover); transform: translateY(-1px); }
+  button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  button.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  button.secondary:hover { background: var(--border); }
+  button.success { background: var(--success); color: #000; }
+  button.danger { background: var(--danger); color: #fff; }
+  button.wa { background: #25D366; color: #000; display: flex; justify-content: center; align-items: center; gap: 8px;}
 
-  /* Match Cards */
-  .match-card {
-    background: var(--card-hover);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 15px;
-    transition: 0.2s;
-  }
-  .match-card:hover { transform: translateY(-2px); border-color: #3b4055; }
-  .match-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .match-name { font-size: 18px; font-weight: 600; margin: 0; }
-  .match-dist { font-size: 12px; color: var(--accent); background: rgba(255, 71, 87, 0.1); padding: 4px 8px; border-radius: 20px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; }
-  .tag { font-size: 11px; background: #232634; color: #b0b6c8; padding: 4px 10px; border-radius: 6px; }
+  /* Match Profile */
+  .profile { margin-bottom: 16px; }
+  .profile-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .profile-name { font-size: 18px; font-weight: 700; }
+  .verified-badge { color: var(--success); font-size: 14px; margin-left: 5px; }
+  .score-badge { background: rgba(108, 92, 231, 0.15); color: var(--primary); padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1px solid var(--primary); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .tag { font-size: 11px; background: var(--surface-hover); border: 1px solid var(--border); padding: 4px 10px; border-radius: 6px; color: var(--text-muted); }
   
-  /* Utilities */
+  /* Compatibility Breakdown */
+  .compat-bar { margin-bottom: 8px; }
+  .compat-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+  .bar-bg { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--primary); border-radius: 2px; }
+
+  /* Date Planner */
+  .budget-display { display: flex; justify-content: space-between; background: #090a0f; padding: 15px; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 15px; }
+  .budget-item { text-align: center; }
+  .budget-item span { display: block; font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+  .budget-item strong { font-size: 16px; color: var(--warning); }
+  .itinerary-step { display: flex; gap: 12px; margin-bottom: 12px; }
+  .itinerary-icon { width: 30px; height: 30px; background: var(--surface-hover); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .itinerary-text strong { display: block; font-size: 14px; margin-bottom: 2px; }
+  .itinerary-text span { font-size: 12px; color: var(--text-muted); }
+
+  .safety-box { background: rgba(253, 203, 110, 0.1); border: 1px solid rgba(253, 203, 110, 0.3); padding: 15px; border-radius: 10px; margin-top: 20px; }
+  .safety-box p { font-size: 12px; color: var(--warning); margin-bottom: 10px; }
+  
   .hidden { display: none !important; }
-  .success-text { color: var(--whatsapp); font-size: 13px; text-align: center; margin-top: 10px; }
 </style>
 </head>
 <body>
 
-<div class="app-container">
-  <div class="header">
-    <h1>👻 GhostDate</h1>
-    <p>Browse privately. Connect on WhatsApp.</p>
+<div class="app">
+  <div class="brand">
+    <h1>Find Love. Your Way.</h1>
+    <p>Private discovery. Meaningful connections. Real dates.</p>
   </div>
 
   <!-- SCREEN 1: SETUP -->
   <div id="screen-setup" class="card">
-    <h2 style="margin-top:0; font-size: 18px; margin-bottom: 20px;">Your Preferences</h2>
+    <div class="card-title">🛡️ Your Privacy & Preferences</div>
     
     <div class="input-group">
       <label>Your Name</label>
-      <input type="text" id="userName" placeholder="e.g. Juma">
+      <input type="text" id="userName" placeholder="First name only">
     </div>
 
     <div class="row">
       <div class="input-group">
-        <label>Looking for Gender</label>
+        <label>I am looking for</label>
         <select id="prefGender">
-          <option value="Female">Female</option>
-          <option value="Male">Male</option>
+          <option value="Female">A Woman</option>
+          <option value="Male">A Man</option>
         </select>
       </div>
       <div class="input-group">
-        <label>Religion</label>
-        <select id="prefReligion">
-          <option value="Any">Any</option>
-          <option value="Christianity">Christianity</option>
-          <option value="Islam">Islam</option>
+        <label>Intentions</label>
+        <select id="prefIntention">
+          <option value="Marriage">Marriage</option>
+          <option value="Serious">Serious Relationship</option>
+          <option value="Friendship">Friendship First</option>
         </select>
       </div>
     </div>
 
     <div class="row">
       <div class="input-group">
-        <label>Min Height (cm)</label>
-        <input type="number" id="prefMinHeight" value="150">
+        <label>Privacy Mode</label>
+        <select id="privacyMode">
+          <option value="Ghost">👻 Ghost (Invisible)</option>
+          <option value="Blur">🌫️ Blur Mode</option>
+          <option value="Selective">👁️ Selective Visibility</option>
+        </select>
       </div>
       <div class="input-group">
-        <label>Max Height (cm)</label>
-        <input type="number" id="prefMaxHeight" value="190">
+        <label>My Max Date Budget (TSh)</label>
+        <input type="number" id="userBudget" value="50000" step="10000">
       </div>
     </div>
 
     <div class="input-group">
-      <label>Date Budget (TSh)</label>
-      <input type="number" id="budget" value="50000" step="10000">
+      <label>My Lifestyle</label>
+      <select id="prefLifestyle">
+        <option value="Urban & Outgoing">Urban & Outgoing</option>
+        <option value="Quiet & Homebody">Quiet & Homebody</option>
+        <option value="Adventurous">Adventurous</option>
+      </select>
     </div>
 
-    <button onclick="startSearching()">Start Searching Privately</button>
-    <p style="font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 15px;">
-      🛡️ Your profile is invisible. You can see them, but they cannot see you until you connect.
-    </p>
+    <button onclick="startSearching()">Start Private Discovery</button>
   </div>
 
   <!-- SCREEN 2: DISCOVERY -->
-  <div id="screen-discover" class="card hidden">
-    <h2 style="margin-top:0; font-size: 18px; margin-bottom: 5px;">Found Matches</h2>
-    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Based on your physical preferences.</p>
+  <div id="screen-discover" class="hidden">
     <div id="resultsList"></div>
-    <button class="outline" onclick="location.reload()">← Back to Settings</button>
+    <button class="secondary" onclick="location.reload()" style="margin-top:10px;">← Adjust Preferences</button>
   </div>
 
-  <!-- SCREEN 3: DATE PLANNER -->
-  <div id="screen-planner" class="card hidden">
-    <h2 style="margin-top:0; font-size: 18px; margin-bottom: 5px; color: var(--whatsapp);">✅ Connection Initiated!</h2>
-    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Here is a date plan that fits your budget.</p>
-    
-    <div id="datePlanBox" style="background: #0f1117; padding: 15px; border-radius: 10px; border: 1px solid var(--border); line-height: 1.6;">
-      <!-- Plan goes here -->
-    </div>
+  <!-- SCREEN 3: CONNECTION & PLANNER -->
+  <div id="screen-connect" class="hidden">
+    <div class="card">
+      <div class="card-title" style="color: var(--success);">✅ Mutual Match!</div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
+        You both agreed to connect. Your identity is now safe to reveal.
+      </p>
 
-    <button class="outline" style="margin-top: 20px;" onclick="location.reload()">Start Over</button>
+      <!-- Controlled WhatsApp -->
+      <div id="whatsapp-section" style="background: #090a0f; border: 1px solid var(--border); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+        <h4 style="font-size: 14px; margin-bottom: 10px;">Secure WhatsApp Connection</h4>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">For your safety, phone numbers are hidden until mutual approval.</p>
+        <button id="btnRequestWa" class="wa" onclick="requestWhatsApp()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Request WhatsApp Access
+        </button>
+      </div>
+
+      <!-- Two-Person Budget Agreement -->
+      <div class="card-title">💸 Two-Person Budget Agreement</div>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">The app finds a comfortable amount for both of you, so no one feels pressured.</p>
+      
+      <div class="budget-display">
+        <div class="budget-item">
+          <span>Your Max</span>
+          <strong id="myBudgetDisplay">50,000</strong>
+        </div>
+        <div class="budget-item">
+          <span>Their Max</span>
+          <strong id="theirBudgetDisplay">30,000</strong>
+        </div>
+        <div class="budget-item">
+          <span>Agreed Plan</span>
+          <strong id="agreedBudgetDisplay" style="color: var(--success);">30,000</strong>
+        </div>
+      </div>
+
+      <button onclick="buildDatePlan()">Generate Date Plan</button>
+
+      <!-- Date Plan Output -->
+      <div id="datePlanOutput" class="hidden" style="margin-top: 20px; background: #090a0f; border: 1px solid var(--border); padding: 15px; border-radius: 10px;">
+        <h4 style="font-size: 14px; margin-bottom: 12px; color: var(--primary);">Your Real-Life Connection</h4>
+        <div id="itineraryBox"></div>
+        
+        <!-- Date Companion -->
+        <div style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px;">
+          <h4 style="font-size: 13px; margin-bottom: 8px;">🗣️ Date Companion: Conversation Starters</h4>
+          <p style="font-size: 12px; color: var(--text-muted); font-style: italic; margin-bottom: 5px;">"What is one thing you would like to achieve in the next five years?"</p>
+          <p style="font-size: 12px; color: var(--text-muted); font-style: italic;">"What does a successful relationship mean to you?"</p>
+        </div>
+
+        <!-- Safety Check-in -->
+        <div class="safety-box">
+          <p>🛡️ <strong>Safety Check-in:</strong> Let a trusted contact know where you are going.</p>
+          <button class="secondary" style="border-color: var(--warning); color: var(--warning);" onclick="alert('Safety link generated and copied! You can now send it to your trusted friend.')">Generate Safety Link</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-  // Mock Database (Simulating real users in Tanzania)
+  // --- MOCK DATABASE ---
+  // In a real app, this comes from a secure database
   const database = [
-    { name: "Amina", gender: "Female", height: 165, body: "Slender", religion: "Islam", color: "Brown", location: "Masaki, Dar es Salaam", dist: "2 km", wa: "255712345678" },
-    { name: "Neema", gender: "Female", height: 172, body: "Athletic", religion: "Christianity", color: "Dark", location: "Mikocheni, Dar es Salaam", dist: "5 km", wa: "255765432109" },
-    { name: "Juma", gender: "Male", height: 180, body: "Average", religion: "Islam", color: "Light", location: "Kariakoo, Dar es Salaam", dist: "1 km", wa: "255789123456" },
-    { name: "David", gender: "Male", height: 175, body: "Athletic", religion: "Christianity", color: "Olive", location: "Sinza, Dar es Salaam", dist: "8 km", wa: "255654321098" },
-    { name: "Zainab", gender: "Female", height: 158, body: "Curvy", religion: "Islam", color: "Light", location: "Upanga, Dar es Salaam", dist: "3 km", wa: "255711223344" }
+    { 
+      id: 1, name: "Amina", gender: "Female", intention: "Marriage", lifestyle: "Quiet & Homebody", 
+      height: 165, verified: true, budget: 30000, 
+      compat: { goals: 95, lifestyle: 88, comms: 90 } 
+    },
+    { 
+      id: 2, name: "Neema", gender: "Female", intention: "Serious", lifestyle: "Urban & Outgoing", 
+      height: 172, verified: true, budget: 60000, 
+      compat: { goals: 80, lifestyle: 75, comms: 85 } 
+    },
+    { 
+      id: 3, name: "Zainab", gender: "Female", intention: "Marriage", lifestyle: "Quiet & Homebody", 
+      height: 158, verified: true, budget: 20000, 
+      compat: { goals: 92, lifestyle: 95, comms: 88 } 
+    }
   ];
 
-  function startSearching() {
-    const name = document.getElementById('userName').value;
-    const gender = document.getElementById('prefGender').value;
-    const religion = document.getElementById('prefReligion').value;
-    const minH = parseInt(document.getElementById('prefMinHeight').value);
-    const maxH = parseInt(document.getElementById('prefMaxHeight').value);
-    const budget = parseInt(document.getElementById('budget').value);
+  let currentUser = {};
+  let currentMatch = {};
 
-    if (!name) return alert("Please enter your name so we know who is searching.");
+  function startSearching() {
+    currentUser.name = document.getElementById('userName').value || "User";
+    currentUser.intention = document.getElementById('prefIntention').value;
+    currentUser.lifestyle = document.getElementById('prefLifestyle').value;
+    currentUser.budget = parseInt(document.getElementById('userBudget').value) || 50000;
+    const prefGender = document.getElementById('prefGender').value;
 
     document.getElementById('screen-setup').classList.add('hidden');
     document.getElementById('screen-discover').classList.remove('hidden');
 
     const list = document.getElementById('resultsList');
-    list.innerHTML = "";
-    let found = 0;
+    list.innerHTML = "<div class='card-title'>We found matches who want the same things as you.</div>";
 
     database.forEach(person => {
-      // Filter Logic
-      const genderMatch = person.gender === gender;
-      const religionMatch = religion === "Any" || person.religion === religion;
-      const heightMatch = person.height >= minH && person.height <= maxH;
+      if (person.gender === prefGender) {
+        // Calculate overall compatibility based on shared traits
+        let score = Math.round((person.compat.goals + person.compat.lifestyle + person.compat.comms) / 3);
+        if(person.intention === currentUser.intention) score += 5;
 
-      if (genderMatch && religionMatch && heightMatch) {
-        found++;
         list.innerHTML += `
-          <div class="match-card">
-            <div class="match-header">
-              <h3 class="match-name">${person.name}, ${person.height}cm</h3>
-              <span class="match-dist">📍 ${person.dist}</span>
+          <div class="card">
+            <div class="profile">
+              <div class="profile-header">
+                <div class="profile-name">
+                  ${person.name} 
+                  ${person.verified ? '<span class="verified-badge">✓ Verified</span>' : ''}
+                </div>
+                <div class="score-badge">${score}% Match</div>
+              </div>
+              
+              <div class="tags">
+                <span class="tag">🎯 ${person.intention}</span>
+                <span class="tag">${person.lifestyle}</span>
+                <span class="tag">${person.height} cm</span>
+              </div>
+
+              <div style="margin-top: 15px;">
+                <div class="compat-bar">
+                  <div class="compat-label"><span>Relationship Goals</span> <span>${person.compat.goals}%</span></div>
+                  <div class="bar-bg"><div class="bar-fill" style="width: ${person.compat.goals}%"></div></div>
+                </div>
+                <div class="compat-bar">
+                  <div class="compat-label"><span>Lifestyle</span> <span>${person.compat.lifestyle}%</span></div>
+                  <div class="bar-bg"><div class="bar-fill" style="width: ${person.compat.lifestyle}%"></div></div>
+                </div>
+              </div>
+              
+              <p style="font-size: 11px; color: var(--text-muted); margin-top: 15px;">🔒 Your identity is hidden until mutual interest.</p>
+              <button onclick="mutualMatch(${person.id})">Send Private Interest</button>
             </div>
-            <div class="tags">
-              <span class="tag">${person.religion}</span>
-              <span class="tag">${person.body}</span>
-              <span class="tag">${person.location}</span>
-            </div>
-            <button class="wa-btn" onclick="connectWhatsApp('${person.name}', '${person.wa}', ${budget})">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-              Connect on WhatsApp
-            </button>
           </div>
         `;
       }
     });
-
-    if (found === 0) {
-      list.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding: 20px 0;">No matches found. Try widening your height range or changing religion.</p>`;
-    }
   }
 
-  function connectWhatsApp(name, phone, budget) {
-    // 1. Move to Planner Screen
+  function mutualMatch(id) {
+    currentMatch = database.find(p => p.id === id);
+    
     document.getElementById('screen-discover').classList.add('hidden');
-    document.getElementById('screen-planner').classList.remove('hidden');
+    document.getElementById('screen-connect').classList.remove('hidden');
 
-    // 2. Build the Date Plan based on TSh Budget
-    let planHTML = "";
-    if (budget >= 80000) {
-      planHTML = `
-        <strong>Premium Date Plan (${budget.toLocaleString()} TSh)</strong><br><br>
-        ☕ <strong>Coffee & Pastries:</strong> 20,000 TSh<br>
-        🚕 <strong>Transport (Bolt):</strong> 15,000 TSh<br>
-        🍽️ <strong>Dinner for Two:</strong> 45,000 TSh<br>
-        🍦 <strong>Ice Cream Walk:</strong> 10,000 TSh<br>
-        <hr style="border-color:#232634; margin: 10px 0;">
-        <strong>Total: 90,000 TSh</strong> (You have enough!)
+    // Two-Person Budget Logic (Find the lower budget so no one overspends)
+    document.getElementById('myBudgetDisplay').innerText = currentUser.budget.toLocaleString() + " TSh";
+    document.getElementById('theirBudgetDisplay').innerText = currentMatch.budget.toLocaleString() + " TSh";
+    
+    const agreedBudget = Math.min(currentUser.budget, currentMatch.budget);
+    document.getElementById('agreedBudgetDisplay').innerText = agreedBudget.toLocaleString() + " TSh";
+  }
+
+  function requestWhatsApp() {
+    const btn = document.getElementById('btnRequestWa');
+    btn.innerHTML = "⏳ Waiting for " + currentMatch.name + " to approve...";
+    btn.disabled = true;
+    btn.style.background = "var(--border)";
+    btn.style.color = "var(--text-muted)";
+    
+    // Simulate the other person approving after 2 seconds
+    setTimeout(() => {
+      btn.innerHTML = "✅ Approved! Open WhatsApp";
+      btn.disabled = false;
+      btn.style.background = "#25D366";
+      btn.style.color = "#000";
+      btn.onclick = () => window.open(`https://wa.me/255700000000?text=Hi%20${currentMatch.name},%20great%20to%20connect%20on%20GhostDate!`, '_blank');
+    }, 2000);
+  }
+
+  function buildDatePlan() {
+    const agreedBudget = Math.min(currentUser.budget, currentMatch.budget);
+    const output = document.getElementById('datePlanOutput');
+    const box = document.getElementById('itineraryBox');
+    
+    output.classList.remove('hidden');
+
+    let plan = "";
+    if (agreedBudget >= 50000) {
+      plan = `
+        <div class="itinerary-step"><div class="itinerary-icon">☕</div><div class="itinerary-text"><strong>Artisan Coffee</strong><span>15,000 TSh | Relaxed environment</span></div></div>
+        <div class="itinerary-step"><div class="itinerary-icon">🚶</div><div class="itinerary-text"><strong>Waterfront Walk</strong><span>Free | Great for talking</span></div></div>
+        <div class="itinerary-step"><div class="itinerary-icon">🍽️</div><div class="itinerary-text"><strong>Dinner</strong><span>30,000 TSh | Local cuisine</span></div></div>
       `;
-    } else if (budget >= 40000) {
-      planHTML = `
-        <strong>Standard Date Plan (${budget.toLocaleString()} TSh)</strong><br><br>
-        ☕ <strong>Local Cafe Meetup:</strong> 15,000 TSh<br>
-        🎬 <strong>Cinema Tickets:</strong> 20,000 TSh<br>
-        🍿 <strong>Snacks:</strong> 5,000 TSh<br>
-        <hr style="border-color:#232634; margin: 10px 0;">
-        <strong>Total: 40,000 TSh</strong> (You have enough!)
+    } else if (agreedBudget >= 20000) {
+      plan = `
+        <div class="itinerary-step"><div class="itinerary-icon">🥤</div><div class="itinerary-text"><strong>Fresh Juice Bar</strong><span>8,000 TSh | Casual</span></div></div>
+        <div class="itinerary-step"><div class="itinerary-icon">🌳</div><div class="itinerary-text"><strong>Public Gardens</strong><span>Free | Quiet and safe</span></div></div>
+        <div class="itinerary-step"><div class="itinerary-icon">🍦</div><div class="itinerary-text"><strong>Ice Cream</strong><span>10,000 TSh | Sweet ending</span></div></div>
       `;
     } else {
-      planHTML = `
-        <strong>Budget Date Plan (${budget.toLocaleString()} TSh)</strong><br><br>
-        🚶‍♂️ <strong>Free Walk in the Park:</strong> 0 TSh<br>
-        🥤 <strong>Soda / Juice for Two:</strong> 5,000 TSh<br>
-        <hr style="border-color:#232634; margin: 10px 0;">
-        <strong>Total: 5,000 TSh</strong> (Keep the rest for transport.)
+      plan = `
+        <div class="itinerary-step"><div class="itinerary-icon">🚶</div><div class="itinerary-text"><strong>City Center Walk</strong><span>Free | Public and safe</span></div></div>
+        <div class="itinerary-step"><div class="itinerary-icon">🥤</div><div class="itinerary-text"><strong>Sodas</strong><span>4,000 TSh | Keep it simple</span></div></div>
       `;
     }
-
-    document.getElementById('datePlanBox').innerHTML = planHTML;
-
-    // 3. Open WhatsApp (using a pre-filled message)
-    const text = encodeURIComponent(`Hi ${name}, I found your profile on GhostDate. I would love to take you out. Are you free this weekend?`);
-    const waUrl = `https://wa.me/${phone}?text=${text}`;
-    
-    // Add a button to actually open WhatsApp inside the planner screen
-    document.getElementById('datePlanBox').innerHTML += `
-      <a href="${waUrl}" target="_blank" style="text-decoration:none;">
-         <button class="wa-btn" style="margin-top:20px;">Message ${name} on WhatsApp Now</button>
-      </a>
-    `;
+    box.innerHTML = plan;
   }
 </script>
 </body>

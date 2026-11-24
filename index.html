@@ -3,121 +3,294 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>GhostDate - One Page App</title>
+<title>GhostDate TZ - Private Discovery</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-  body { font-family: system-ui, sans-serif; background: #0e0f13; color: #fff; margin: 0; padding: 20px; }
-  .card { background: #171922; border: 1px solid #2a2e3d; border-radius: 10px; padding: 20px; margin-bottom: 15px; max-width: 500px; margin-left: auto; margin-right: auto; }
-  h2 { margin-top: 0; color: #7c5cff; }
-  input, select { width: 100%; padding: 10px; margin: 5px 0 15px 0; background: #1f2230; border: 1px solid #2a2e3d; color: #fff; border-radius: 5px; box-sizing: border-box; }
-  button { background: #7c5cff; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; }
-  button:hover { background: #6a4ce0; }
-  .hidden { display: none; }
-  .candidate { background: #1f2230; padding: 15px; border-radius: 8px; margin-bottom: 10px; }
-  .pill { background: #2a2e3d; padding: 3px 8px; border-radius: 10px; font-size: 12px; margin-right: 5px; }
+  :root {
+    --bg: #0b0c10;
+    --card: #15171e;
+    --card-hover: #1c1f28;
+    --accent: #ff4757;
+    --accent-hover: #ff6b81;
+    --text: #ffffff;
+    --text-muted: #8b92a5;
+    --border: #232634;
+    --whatsapp: #25D366;
+  }
+  * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+  body { 
+    background-color: var(--bg); 
+    color: var(--text); 
+    margin: 0; 
+    padding: 20px; 
+    display: flex; 
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+  .app-container { width: 100%; max-width: 480px; }
+  
+  /* Header */
+  .header { text-align: center; margin-bottom: 25px; }
+  .header h1 { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+  .header p { color: var(--text-muted); font-size: 14px; margin-top: 5px; }
+  
+  /* Cards */
+  .card { 
+    background: var(--card); 
+    border: 1px solid var(--border); 
+    border-radius: 16px; 
+    padding: 24px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    animation: fadeIn 0.4s ease-out;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  
+  /* Inputs */
+  .input-group { margin-bottom: 15px; }
+  label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
+  input, select { 
+    width: 100%; 
+    padding: 12px 15px; 
+    background: #0f1117; 
+    border: 1px solid var(--border); 
+    color: var(--text); 
+    border-radius: 10px; 
+    font-size: 14px;
+    transition: 0.2s;
+  }
+  input:focus, select:focus { outline: none; border-color: var(--accent); }
+  .row { display: flex; gap: 10px; }
+  .row .input-group { flex: 1; }
+
+  /* Buttons */
+  button { 
+    background: var(--accent); 
+    color: white; 
+    border: none; 
+    padding: 14px; 
+    width: 100%; 
+    border-radius: 10px; 
+    font-size: 15px; 
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: 0.2s;
+    margin-top: 10px;
+  }
+  button:hover { background: var(--accent-hover); transform: translateY(-1px); }
+  button.wa-btn { background: var(--whatsapp); color: #000; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px;}
+  button.wa-btn:hover { background: #20bd5a; }
+  button.outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  button.outline:hover { background: var(--border); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Match Cards */
+  .match-card {
+    background: var(--card-hover);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 15px;
+    transition: 0.2s;
+  }
+  .match-card:hover { transform: translateY(-2px); border-color: #3b4055; }
+  .match-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .match-name { font-size: 18px; font-weight: 600; margin: 0; }
+  .match-dist { font-size: 12px; color: var(--accent); background: rgba(255, 71, 87, 0.1); padding: 4px 8px; border-radius: 20px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; }
+  .tag { font-size: 11px; background: #232634; color: #b0b6c8; padding: 4px 10px; border-radius: 6px; }
+  
+  /* Utilities */
+  .hidden { display: none !important; }
+  .success-text { color: var(--whatsapp); font-size: 13px; text-align: center; margin-top: 10px; }
 </style>
 </head>
 <body>
 
-<!-- SCREEN 1: PROFILE SETUP -->
-<div id="screen-setup" class="card">
-  <h2>👻 GhostDate Setup</h2>
-  <p>Enter your preferences. You will remain invisible to everyone.</p>
-  
-  <label>Your Name</label>
-  <input type="text" id="userName" placeholder="John / Jane">
+<div class="app-container">
+  <div class="header">
+    <h1>👻 GhostDate</h1>
+    <p>Browse privately. Connect on WhatsApp.</p>
+  </div>
 
-  <label>I am looking for (Height in cm)</label>
-  <input type="number" id="prefHeight" placeholder="e.g. 170">
+  <!-- SCREEN 1: SETUP -->
+  <div id="screen-setup" class="card">
+    <h2 style="margin-top:0; font-size: 18px; margin-bottom: 20px;">Your Preferences</h2>
+    
+    <div class="input-group">
+      <label>Your Name</label>
+      <input type="text" id="userName" placeholder="e.g. Juma">
+    </div>
 
-  <label>I am looking for (Body Type)</label>
-  <select id="prefBody">
-    <option value="athletic">Athletic</option>
-    <option value="average">Average</option>
-    <option value="slender">Slender</option>
-  </select>
+    <div class="row">
+      <div class="input-group">
+        <label>Looking for Gender</label>
+        <select id="prefGender">
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Religion</label>
+        <select id="prefReligion">
+          <option value="Any">Any</option>
+          <option value="Christianity">Christianity</option>
+          <option value="Islam">Islam</option>
+        </select>
+      </div>
+    </div>
 
-  <label>Date Budget ($)</label>
-  <input type="number" id="budget" value="50">
+    <div class="row">
+      <div class="input-group">
+        <label>Min Height (cm)</label>
+        <input type="number" id="prefMinHeight" value="150">
+      </div>
+      <div class="input-group">
+        <label>Max Height (cm)</label>
+        <input type="number" id="prefMaxHeight" value="190">
+      </div>
+    </div>
 
-  <button onclick="startSearching()">Start Searching Privately</button>
-</div>
+    <div class="input-group">
+      <label>Date Budget (TSh)</label>
+      <input type="number" id="budget" value="50000" step="10000">
+    </div>
 
-<!-- SCREEN 2: DISCOVERY -->
-<div id="screen-discover" class="card hidden">
-  <h2>🔍 Found Matches</h2>
-  <p>These people match your wish. You are invisible to them.</p>
-  <div id="resultsList"></div>
-</div>
+    <button onclick="startSearching()">Start Searching Privately</button>
+    <p style="font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 15px;">
+      🛡️ Your profile is invisible. You can see them, but they cannot see you until you connect.
+    </p>
+  </div>
 
-<!-- SCREEN 3: DATE PLANNER -->
-<div id="screen-planner" class="card hidden">
-  <h2>💸 Your Date Plan</h2>
-  <p id="datePlanText"></p>
-  <button onclick="location.reload()">Start Over</button>
+  <!-- SCREEN 2: DISCOVERY -->
+  <div id="screen-discover" class="card hidden">
+    <h2 style="margin-top:0; font-size: 18px; margin-bottom: 5px;">Found Matches</h2>
+    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Based on your physical preferences.</p>
+    <div id="resultsList"></div>
+    <button class="outline" onclick="location.reload()">← Back to Settings</button>
+  </div>
+
+  <!-- SCREEN 3: DATE PLANNER -->
+  <div id="screen-planner" class="card hidden">
+    <h2 style="margin-top:0; font-size: 18px; margin-bottom: 5px; color: var(--whatsapp);">✅ Connection Initiated!</h2>
+    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Here is a date plan that fits your budget.</p>
+    
+    <div id="datePlanBox" style="background: #0f1117; padding: 15px; border-radius: 10px; border: 1px solid var(--border); line-height: 1.6;">
+      <!-- Plan goes here -->
+    </div>
+
+    <button class="outline" style="margin-top: 20px;" onclick="location.reload()">Start Over</button>
+  </div>
 </div>
 
 <script>
-  // This is a mock database of people so it works instantly without a backend
+  // Mock Database (Simulating real users in Tanzania)
   const database = [
-    { name: "Sarah", height: 165, body: "slender", distance: "2 km", color: "Brown" },
-    { name: "Mike", height: 180, body: "athletic", distance: "5 km", color: "Light" },
-    { name: "Elena", height: 170, body: "average", distance: "1 km", color: "Olive" }
+    { name: "Amina", gender: "Female", height: 165, body: "Slender", religion: "Islam", color: "Brown", location: "Masaki, Dar es Salaam", dist: "2 km", wa: "255712345678" },
+    { name: "Neema", gender: "Female", height: 172, body: "Athletic", religion: "Christianity", color: "Dark", location: "Mikocheni, Dar es Salaam", dist: "5 km", wa: "255765432109" },
+    { name: "Juma", gender: "Male", height: 180, body: "Average", religion: "Islam", color: "Light", location: "Kariakoo, Dar es Salaam", dist: "1 km", wa: "255789123456" },
+    { name: "David", gender: "Male", height: 175, body: "Athletic", religion: "Christianity", color: "Olive", location: "Sinza, Dar es Salaam", dist: "8 km", wa: "255654321098" },
+    { name: "Zainab", gender: "Female", height: 158, body: "Curvy", religion: "Islam", color: "Light", location: "Upanga, Dar es Salaam", dist: "3 km", wa: "255711223344" }
   ];
 
   function startSearching() {
     const name = document.getElementById('userName').value;
-    const prefH = parseInt(document.getElementById('prefHeight').value);
-    const prefB = document.getElementById('prefBody').value;
-    const budget = document.getElementById('budget').value;
+    const gender = document.getElementById('prefGender').value;
+    const religion = document.getElementById('prefReligion').value;
+    const minH = parseInt(document.getElementById('prefMinHeight').value);
+    const maxH = parseInt(document.getElementById('prefMaxHeight').value);
+    const budget = parseInt(document.getElementById('budget').value);
 
-    if (!name) return alert("Please enter your name.");
+    if (!name) return alert("Please enter your name so we know who is searching.");
 
-    // Hide setup, show discovery
     document.getElementById('screen-setup').classList.add('hidden');
     document.getElementById('screen-discover').classList.remove('hidden');
 
-    // Filter the database based on user's wish
     const list = document.getElementById('resultsList');
     list.innerHTML = "";
+    let found = 0;
 
     database.forEach(person => {
-      // If height is close or body matches, show them
-      if (person.body === prefB || Math.abs(person.height - prefH) < 10) {
+      // Filter Logic
+      const genderMatch = person.gender === gender;
+      const religionMatch = religion === "Any" || person.religion === religion;
+      const heightMatch = person.height >= minH && person.height <= maxH;
+
+      if (genderMatch && religionMatch && heightMatch) {
+        found++;
         list.innerHTML += `
-          <div class="candidate">
-            <h3>${person.name}</h3>
-            <span class="pill">${person.height} cm</span>
-            <span class="pill">${person.body}</span>
-            <span class="pill">${person.distance} away</span>
-            <br><br>
-            <button onclick="planDate('${person.name}', ${budget})">Send Interest & Plan Date</button>
+          <div class="match-card">
+            <div class="match-header">
+              <h3 class="match-name">${person.name}, ${person.height}cm</h3>
+              <span class="match-dist">📍 ${person.dist}</span>
+            </div>
+            <div class="tags">
+              <span class="tag">${person.religion}</span>
+              <span class="tag">${person.body}</span>
+              <span class="tag">${person.location}</span>
+            </div>
+            <button class="wa-btn" onclick="connectWhatsApp('${person.name}', '${person.wa}', ${budget})">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              Connect on WhatsApp
+            </button>
           </div>
         `;
       }
     });
 
-    if (list.innerHTML === "") {
-      list.innerHTML = "<p>No matches found. Try different filters.</p>";
+    if (found === 0) {
+      list.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding: 20px 0;">No matches found. Try widening your height range or changing religion.</p>`;
     }
   }
 
-  function planDate(matchName, budget) {
+  function connectWhatsApp(name, phone, budget) {
+    // 1. Move to Planner Screen
     document.getElementById('screen-discover').classList.add('hidden');
     document.getElementById('screen-planner').classList.remove('hidden');
 
-    const plannerText = document.getElementById('datePlanText');
-    
-    // Simple logic to build a date based on budget
-    let plan = "";
-    if (budget >= 50) {
-      plan = `1. Meet ${matchName} at a Coffee Shop ($10)<br>2. Walk in the Park (Free)<br>3. Dinner at a nice restaurant ($35)<br><br><strong>Total: $45</strong>`;
-    } else if (budget >= 20) {
-      plan = `1. Meet ${matchName} for Street Food ($15)<br>2. Walk around the city (Free)<br><br><strong>Total: $15</strong>`;
+    // 2. Build the Date Plan based on TSh Budget
+    let planHTML = "";
+    if (budget >= 80000) {
+      planHTML = `
+        <strong>Premium Date Plan (${budget.toLocaleString()} TSh)</strong><br><br>
+        ☕ <strong>Coffee & Pastries:</strong> 20,000 TSh<br>
+        🚕 <strong>Transport (Bolt):</strong> 15,000 TSh<br>
+        🍽️ <strong>Dinner for Two:</strong> 45,000 TSh<br>
+        🍦 <strong>Ice Cream Walk:</strong> 10,000 TSh<br>
+        <hr style="border-color:#232634; margin: 10px 0;">
+        <strong>Total: 90,000 TSh</strong> (You have enough!)
+      `;
+    } else if (budget >= 40000) {
+      planHTML = `
+        <strong>Standard Date Plan (${budget.toLocaleString()} TSh)</strong><br><br>
+        ☕ <strong>Local Cafe Meetup:</strong> 15,000 TSh<br>
+        🎬 <strong>Cinema Tickets:</strong> 20,000 TSh<br>
+        🍿 <strong>Snacks:</strong> 5,000 TSh<br>
+        <hr style="border-color:#232634; margin: 10px 0;">
+        <strong>Total: 40,000 TSh</strong> (You have enough!)
+      `;
     } else {
-      plan = `1. Meet ${matchName} for a free walk in the park.<br><br><strong>Total: $0</strong>`;
+      planHTML = `
+        <strong>Budget Date Plan (${budget.toLocaleString()} TSh)</strong><br><br>
+        🚶‍♂️ <strong>Free Walk in the Park:</strong> 0 TSh<br>
+        🥤 <strong>Soda / Juice for Two:</strong> 5,000 TSh<br>
+        <hr style="border-color:#232634; margin: 10px 0;">
+        <strong>Total: 5,000 TSh</strong> (Keep the rest for transport.)
+      `;
     }
 
-    plannerText.innerHTML = `You are going on a date with <strong>${matchName}</strong>!<br><br>${plan}`;
+    document.getElementById('datePlanBox').innerHTML = planHTML;
+
+    // 3. Open WhatsApp (using a pre-filled message)
+    const text = encodeURIComponent(`Hi ${name}, I found your profile on GhostDate. I would love to take you out. Are you free this weekend?`);
+    const waUrl = `https://wa.me/${phone}?text=${text}`;
+    
+    // Add a button to actually open WhatsApp inside the planner screen
+    document.getElementById('datePlanBox').innerHTML += `
+      <a href="${waUrl}" target="_blank" style="text-decoration:none;">
+         <button class="wa-btn" style="margin-top:20px;">Message ${name} on WhatsApp Now</button>
+      </a>
+    `;
   }
 </script>
 </body>

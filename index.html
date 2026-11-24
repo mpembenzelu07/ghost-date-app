@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GhostDate - One Page App</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #0e0f13; color: #fff; margin: 0; padding: 20px; }
+  .card { background: #171922; border: 1px solid #2a2e3d; border-radius: 10px; padding: 20px; margin-bottom: 15px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  h2 { margin-top: 0; color: #7c5cff; }
+  input, select { width: 100%; padding: 10px; margin: 5px 0 15px 0; background: #1f2230; border: 1px solid #2a2e3d; color: #fff; border-radius: 5px; box-sizing: border-box; }
+  button { background: #7c5cff; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; }
+  button:hover { background: #6a4ce0; }
+  .hidden { display: none; }
+  .candidate { background: #1f2230; padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+  .pill { background: #2a2e3d; padding: 3px 8px; border-radius: 10px; font-size: 12px; margin-right: 5px; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN 1: PROFILE SETUP -->
+<div id="screen-setup" class="card">
+  <h2>👻 GhostDate Setup</h2>
+  <p>Enter your preferences. You will remain invisible to everyone.</p>
+  
+  <label>Your Name</label>
+  <input type="text" id="userName" placeholder="John / Jane">
+
+  <label>I am looking for (Height in cm)</label>
+  <input type="number" id="prefHeight" placeholder="e.g. 170">
+
+  <label>I am looking for (Body Type)</label>
+  <select id="prefBody">
+    <option value="athletic">Athletic</option>
+    <option value="average">Average</option>
+    <option value="slender">Slender</option>
+  </select>
+
+  <label>Date Budget ($)</label>
+  <input type="number" id="budget" value="50">
+
+  <button onclick="startSearching()">Start Searching Privately</button>
+</div>
+
+<!-- SCREEN 2: DISCOVERY -->
+<div id="screen-discover" class="card hidden">
+  <h2>🔍 Found Matches</h2>
+  <p>These people match your wish. You are invisible to them.</p>
+  <div id="resultsList"></div>
+</div>
+
+<!-- SCREEN 3: DATE PLANNER -->
+<div id="screen-planner" class="card hidden">
+  <h2>💸 Your Date Plan</h2>
+  <p id="datePlanText"></p>
+  <button onclick="location.reload()">Start Over</button>
+</div>
+
+<script>
+  // This is a mock database of people so it works instantly without a backend
+  const database = [
+    { name: "Sarah", height: 165, body: "slender", distance: "2 km", color: "Brown" },
+    { name: "Mike", height: 180, body: "athletic", distance: "5 km", color: "Light" },
+    { name: "Elena", height: 170, body: "average", distance: "1 km", color: "Olive" }
+  ];
+
+  function startSearching() {
+    const name = document.getElementById('userName').value;
+    const prefH = parseInt(document.getElementById('prefHeight').value);
+    const prefB = document.getElementById('prefBody').value;
+    const budget = document.getElementById('budget').value;
+
+    if (!name) return alert("Please enter your name.");
+
+    // Hide setup, show discovery
+    document.getElementById('screen-setup').classList.add('hidden');
+    document.getElementById('screen-discover').classList.remove('hidden');
+
+    // Filter the database based on user's wish
+    const list = document.getElementById('resultsList');
+    list.innerHTML = "";
+
+    database.forEach(person => {
+      // If height is close or body matches, show them
+      if (person.body === prefB || Math.abs(person.height - prefH) < 10) {
+        list.innerHTML += `
+          <div class="candidate">
+            <h3>${person.name}</h3>
+            <span class="pill">${person.height} cm</span>
+            <span class="pill">${person.body}</span>
+            <span class="pill">${person.distance} away</span>
+            <br><br>
+            <button onclick="planDate('${person.name}', ${budget})">Send Interest & Plan Date</button>
+          </div>
+        `;
+      }
+    });
+
+    if (list.innerHTML === "") {
+      list.innerHTML = "<p>No matches found. Try different filters.</p>";
+    }
+  }
+
+  function planDate(matchName, budget) {
+    document.getElementById('screen-discover').classList.add('hidden');
+    document.getElementById('screen-planner').classList.remove('hidden');
+
+    const plannerText = document.getElementById('datePlanText');
+    
+    // Simple logic to build a date based on budget
+    let plan = "";
+    if (budget >= 50) {
+      plan = `1. Meet ${matchName} at a Coffee Shop ($10)<br>2. Walk in the Park (Free)<br>3. Dinner at a nice restaurant ($35)<br><br><strong>Total: $45</strong>`;
+    } else if (budget >= 20) {
+      plan = `1. Meet ${matchName} for Street Food ($15)<br>2. Walk around the city (Free)<br><br><strong>Total: $15</strong>`;
+    } else {
+      plan = `1. Meet ${matchName} for a free walk in the park.<br><br><strong>Total: $0</strong>`;
+    }
+
+    plannerText.innerHTML = `You are going on a date with <strong>${matchName}</strong>!<br><br>${plan}`;
+  }
+</script>
+</body>
+</html>

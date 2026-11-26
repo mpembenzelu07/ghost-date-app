@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ghost Date | Admin & Safety</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --navy: #0A192F; --burgundy: #6A1B2A; --gold: #D4AF37; --bg: #F8F9FA; --surface: #FFFFFF; --text: #1C1C1E; --danger: #DC2626; }
+  * { box-sizing: border-box; font-family: 'Outfit', sans-serif; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); padding: 20px; }
+  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid var(--navy); padding-bottom: 10px; }
+  .header h1 { color: var(--navy); font-size: 24px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .card { background: var(--surface); border: 1px solid #E5E7EB; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+  .card h2 { font-size: 16px; color: var(--burgundy); margin-bottom: 15px; }
+  .alert { background: #FEF2F2; border-left: 4px solid var(--danger); padding: 12px; margin-bottom: 10px; border-radius: 4px; }
+  .alert strong { color: var(--danger); display: block; font-size: 14px; }
+  .alert span { font-size: 13px; color: var(--text); }
+  button { background: var(--danger); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 10px; }
+  button:hover { background: #B91C1C; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>👻 Ghost Date: Trust & Safety Center</h1>
+    <div style="font-size: 14px; font-weight: 600; color: var(--navy);">Admin: Founder</div>
+  </div>
+
+  <div class="grid">
+    <!-- Scam Shield Alerts -->
+    <div class="card">
+      <h2>🚨 Scam Shield Flags (Live)</h2>
+      <p style="font-size: 13px; color: #6B7280; margin-bottom: 15px;">Messages blocked by the system for containing money requests.</p>
+      
+      <div class="alert">
+        <strong>User: Juma_99 (ID: #402)</strong>
+        <span>Blocked Message: "Nitumie vocha ya 5000 kwanza..."</span><br>
+        <button>Ban Account</button>
+      </div>
+
+      <div class="alert">
+        <strong>User: David_M (ID: #119)</strong>
+        <span>Blocked Message: "I have an emergency, can you send M-Pesa?"</span><br>
+        <button>Ban Account</button>
+      </div>
+    </div>
+
+    <!-- User Reports -->
+    <div class="card">
+      <h2>⚠️ User Reports</h2>
+      <p style="font-size: 13px; color: #6B7280; margin-bottom: 15px;">Reports submitted by women on the platform.</p>
+      
+      <div class="alert" style="border-left-color: var(--gold); background: #FFFBEB;">
+        <strong style="color: #B45309;">Reported User: Mike_TZ</strong>
+        <span>Reason: "Sent inappropriate photos without mutual consent."</span><br>
+        <button style="background: var(--navy);">Review Profile</button>
+      </div>
+    </div>
+
+    <!-- Platform Metrics -->
+    <div class="card">
+      <h2>📊 Launch Metrics</h2>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+        <span>Total Users:</span> <strong>284</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+        <span>Women (Target 50%):</span> <strong style="color: #10B981;">142</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+        <span>Men (Target 50%):</span> <strong style="color: #10B981;">142</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px;">
+        <span>Pending Verifications:</span> <strong>12</strong>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

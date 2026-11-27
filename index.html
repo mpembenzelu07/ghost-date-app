@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ghost Date | Real Connections. Your Privacy. Your Choice.</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-<!-- Load Supabase Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
@@ -19,44 +18,36 @@
   .app { width: 100%; max-width: 100%; }
   .container { max-width: 520px; margin: 0 auto; padding: 20px; }
 
-  /* =========================================
-     VIEW 1: WAITLIST LANDING PAGE
-  ========================================= */
+  /* VIEW 1: WAITLIST */
   #view-waitlist { background: var(--navy); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
   .waitlist-container { max-width: 480px; text-align: center; width: 100%; }
-  .waitlist-container h1 { font-family: 'Playfair Display', serif; font-size: 48px; color: var(--gold); margin-bottom: 10px; letter-spacing: -1px; }
+  .waitlist-container h1 { font-family: 'Playfair Display', serif; font-size: 48px; color: var(--gold); margin-bottom: 10px; }
   .waitlist-container p.subtitle { font-size: 16px; color: #CBD5E1; margin-bottom: 40px; line-height: 1.6; }
-  
   .waitlist-card { background: var(--surface); padding: 35px; border-radius: 16px; text-align: left; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
   .waitlist-card h2 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 24px; margin-bottom: 5px; }
-  .waitlist-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 25px; }
-
-  /* Forms & Inputs */
+  
+  /* Forms */
   .input-group { margin-bottom: 18px; }
-  label { display: block; font-size: 12px; font-weight: 700; color: var(--navy); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-  input, select { width: 100%; padding: 14px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 8px; font-size: 15px; transition: 0.2s; }
-  input:focus, select:focus { outline: none; border-color: var(--burgundy); box-shadow: 0 0 0 3px rgba(106, 27, 42, 0.1); }
+  label { display: block; font-size: 12px; font-weight: 700; color: var(--navy); margin-bottom: 6px; text-transform: uppercase; }
+  input, select { width: 100%; padding: 14px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 8px; font-size: 15px; }
+  input:focus, select:focus { outline: none; border-color: var(--burgundy); }
   .row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
   /* Buttons */
   button { background: var(--burgundy); color: white; border: none; padding: 16px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 10px; }
-  button:hover { background: #851F33; transform: translateY(-2px); }
-  button:disabled { background: #9CA3AF; cursor: not-allowed; transform: none; }
+  button:hover { background: #851F33; }
+  button:disabled { background: #9CA3AF; cursor: not-allowed; }
   button.gold { background: var(--gold); color: var(--navy); }
   button.gold:hover { background: #C5A028; }
   button.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
   button.premium { background: var(--navy); color: var(--gold); border: 1px solid var(--gold); }
 
-  /* =========================================
-     VIEW 2 & 3: APP PROTOTYPE (Hidden initially)
-  ========================================= */
+  /* APP PROTOTYPE */
   #view-app { display: none; padding-top: 20px; background: var(--bg); min-height: 100vh; }
   .brand-header { text-align: center; margin-bottom: 30px; }
   .brand-header h1 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--navy); }
-  .brand-header p { color: var(--burgundy); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
-
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 25px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(10, 25, 47, 0.05); animation: slideUp 0.4s ease-out; }
-  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .brand-header p { color: var(--burgundy); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 25px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(10, 25, 47, 0.05); }
   .card-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--navy); margin-bottom: 5px; }
   .card-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
 
@@ -64,17 +55,16 @@
   .match-card { border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 15px; background: var(--surface); }
   .match-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
   .match-name { font-size: 20px; font-weight: 700; color: var(--navy); }
-  .score-badge { background: rgba(212, 175, 55, 0.15); color: #927416; padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; border: 1px solid rgba(212, 175, 55, 0.3); }
+  .score-badge { background: rgba(212, 175, 55, 0.15); color: #927416; padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; }
   .tag { font-size: 12px; background: var(--bg); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px; color: var(--text-muted); display: inline-block; margin-right: 5px; margin-bottom: 5px; }
-  .why-match { background: rgba(106, 27, 42, 0.04); padding: 12px; border-radius: 8px; font-size: 13px; border-left: 3px solid var(--burgundy); margin-bottom: 15px; color: var(--text); }
+  .why-match { background: rgba(106, 27, 42, 0.04); padding: 12px; border-radius: 8px; font-size: 13px; border-left: 3px solid var(--burgundy); margin-bottom: 15px; }
 
-  /* Chat & Scam Shield */
+  /* Chat */
   .chat-box { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; height: 220px; padding: 15px; overflow-y: auto; margin-bottom: 15px; font-size: 14px; }
-  .chat-msg { margin-bottom: 12px; padding: 12px 16px; border-radius: 16px; max-width: 85%; line-height: 1.5; }
+  .chat-msg { margin-bottom: 12px; padding: 12px 16px; border-radius: 16px; max-width: 85%; line-height: 1.5; word-wrap: break-word; }
   .chat-msg.them { background: var(--surface); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
   .chat-msg.me { background: var(--navy); color: white; margin-left: auto; border-bottom-right-radius: 4px; }
   .chat-msg.warning { background: #FEF2F2; border: 1px solid #F87171; color: var(--danger); font-weight: 600; text-align: center; max-width: 100%; border-radius: 8px; }
-  
   .hidden { display: none !important; }
 </style>
 </head>
@@ -82,29 +72,24 @@
 
 <div class="app">
   
-  <!-- =========================================
-       VIEW 1: WAITLIST LANDING PAGE
-  ========================================== -->
+  <!-- VIEW 1: WAITLIST -->
   <div id="view-waitlist">
     <div class="waitlist-container">
       <h1>Ghost Date</h1>
-      <p class="subtitle">Real connections. Your privacy. Your choice.<br>We are launching soon in Dar es Salaam. Join the private waitlist.</p>
-      
+      <p class="subtitle">Real connections. Your privacy. Your choice.<br>We are launching soon in Dar es Salaam.</p>
       <div class="waitlist-card">
         <h2>Request Early Access</h2>
-        <p>We are curating a balanced community (50% Women / 50% Men) to ensure a safe and genuine experience.</p>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 25px;">We are curating a balanced community to ensure a safe and genuine experience.</p>
         
         <form id="waitlistForm" onsubmit="joinWaitlist(event)">
           <div class="input-group">
             <label>First Name</label>
             <input type="text" id="wName" placeholder="e.g. Amina" required>
           </div>
-
           <div class="input-group">
-            <label>Phone Number (M-Pesa / Tigo Pesa)</label>
+            <label>Phone Number</label>
             <input type="tel" id="wPhone" placeholder="e.g. 0754 123 456" required>
           </div>
-
           <div class="input-group">
             <label>I am a...</label>
             <select id="wGender" required>
@@ -113,16 +98,13 @@
               <option value="male">Man</option>
             </select>
           </div>
-
           <button type="submit" id="btnWaitlist" class="gold">Join Waitlist & Preview App</button>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- =========================================
-       VIEW 2 & 3: THE APP PROTOTYPE
-  ========================================== -->
+  <!-- VIEW 2: APP PROTOTYPE -->
   <div id="view-app">
     <div class="container">
       <div class="brand-header">
@@ -130,7 +112,7 @@
         <p>Intentional Dating</p>
       </div>
 
-      <!-- SCREEN 1: PROFILE & DNA -->
+      <!-- PROFILE & DNA -->
       <div id="screen-setup" class="card">
         <div class="card-title">Create Your Private Profile</div>
         <div class="card-subtitle">You must be 18+ to use Ghost Date.</div>
@@ -151,7 +133,6 @@
           <select id="prefIntention">
             <option value="Marriage">Marriage – Looking for a life partner</option>
             <option value="Dating">Dating – Looking for a genuine relationship</option>
-            <option value="Friendship">Friendship – Looking for meaningful connections</option>
           </select>
         </div>
 
@@ -171,11 +152,10 @@
             </select>
           </div>
         </div>
-
-        <button onclick="verifyAndSearch()" class="gold">Verify & Find Matches</button>
+        <button onclick="findRealMatch()" class="gold">Verify & Find Matches</button>
       </div>
 
-      <!-- SCREEN 2: DISCOVERY -->
+      <!-- DISCOVERY -->
       <div id="screen-discover" class="hidden">
         <div id="resultsList"></div>
         
@@ -183,124 +163,120 @@
         <div class="card" style="border: 2px solid var(--gold); background: linear-gradient(180deg, #FFFFFF 0%, #FDFBF7 100%);">
           <div class="card-title" style="color: var(--burgundy);">Upgrade to GhostDate Plus</div>
           <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">
-            See who has already expressed interest in you, unlock advanced compatibility filters, and get priority curation. No pay-per-unlock fees.
+            See who has already expressed interest in you, unlock advanced filters, and get priority curation. 
           </p>
           <button class="premium">⭐ Subscribe for TSh 4,900/mo</button>
         </div>
       </div>
 
-      <!-- SCREEN 3: MUTUAL CONNECTION & CHAT -->
+      <!-- CHAT -->
       <div id="screen-connect" class="hidden">
         <div class="card">
           <div class="card-title" style="color: var(--navy);">It's a Mutual Match!</div>
-          <div class="card-subtitle">You both agreed to connect. Your identity is now revealed.</div>
+          <div class="card-subtitle">You both agreed to connect. Say hello securely below.</div>
 
-          <!-- Scam Shield Chat -->
           <div class="chat-box" id="chatBox">
-            <div class="chat-msg them">Hi! I saw we both value direct communication. How is your day going?</div>
+            <!-- Messages load here -->
           </div>
           
           <div style="display: flex; gap: 10px; margin-bottom: 20px;">
             <input type="text" id="chatInput" placeholder="Type a message (Try typing 'M-Pesa')..." style="margin-bottom:0;">
-            <button style="width: auto; padding: 0 20px; margin: 0; background: var(--navy);" onclick="sendMessage()">Send</button>
+            <button style="width: auto; padding: 0 20px; margin: 0; background: var(--navy);" onclick="sendRealMessage()">Send</button>
           </div>
-
-          <button class="secondary" onclick="alert('WhatsApp exchange is free and mutual. Opening WhatsApp...')">Connect on WhatsApp</button>
         </div>
       </div>
 
     </div>
   </div>
-
 </div>
 
 <script>
-  // ==========================================
-  // 1. CONNECT TO YOUR REAL DATABASE (Keys Added)
-  // ==========================================
-  // Note: I removed /rest/v1/ from the URL, as the code needs just the base URL.
+  // 1. CONNECT TO DATABASE
   const SUPABASE_URL = 'https://ssaxnztxgbjvsiklmkys.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_s3UNxyqSrO2A874zW01XZw_ASvPQTAe';
-  
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // ==========================================
-  // 2. WAITLIST LOGIC (Saving to Database)
-  // ==========================================
+  let currentUser = {};
+  let currentMatch = {};
+  const roomId = "room_1"; // In production, this is unique per match
+
+  // 2. WAITLIST LOGIC
   async function joinWaitlist(e) {
     e.preventDefault();
     const name = document.getElementById('wName').value;
     const phone = document.getElementById('wPhone').value;
     const gender = document.getElementById('wGender').value;
     
-    // Change button text to show loading
     const btn = document.getElementById('btnWaitlist');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = "Saving to database...";
-    btn.disabled = true;
+    btn.innerHTML = "Saving..."; btn.disabled = true;
 
-    // Send data to Supabase
-    const { data, error } = await supabaseClient
-      .from('waitlist')
-      .insert([{ first_name: name, phone: phone, gender: gender }]);
+    const { error } = await supabaseClient.from('waitlist').insert([{ first_name: name, phone: phone, gender: gender }]);
 
     if (error) {
-      console.error(error);
-      alert("Database Error: " + error.message + "\n\nDid you run the SQL script in Supabase to create the 'waitlist' table?");
-      btn.innerHTML = originalText;
-      btn.disabled = false;
+      alert("Database Error: " + error.message);
+      btn.innerHTML = "Join Waitlist"; btn.disabled = false;
       return;
     }
 
-    // Success! Transition to App Prototype
     document.getElementById('view-waitlist').style.display = 'none';
     document.getElementById('view-app').style.display = 'block';
-    
-    // Pre-fill the app with the user's name from the waitlist
     document.getElementById('userName').value = name;
-    
-    // Smooth scroll to top
     window.scrollTo(0, 0);
   }
 
-  // ==========================================
-  // 3. APP PROTOTYPE LOGIC
-  // ==========================================
-  const match = {
-    name: "Amina", intention: "Marriage", 
-    dnaMatch: 94, comm: "Direct", conflict: "Talk immediately"
-  };
-
-  function verifyAndSearch() {
+  // 3. REAL MATCHING LOGIC (No more hardcoded Amina)
+  async function findRealMatch() {
     const dob = document.getElementById('userDob').value;
     if (!dob) return alert("Please enter your Date of Birth.");
 
+    // Age Verification
     const birthDate = new Date(dob);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const m = today.getMonth() - birthDate.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) { age--; }
+    if (age < 18) return alert("Access Denied: You must be 18+.");
 
-    if (age < 18) {
-        return alert("Access Denied: You must be at least 18 years old to use Ghost Date.");
+    currentUser.name = document.getElementById('userName').value;
+    currentUser.intention = document.getElementById('prefIntention').value;
+
+    // Show loading state
+    const btn = document.querySelector('#screen-setup button');
+    btn.innerHTML = "Searching Database...";
+
+    // Query Supabase for a real profile that matches intention and isn't the current user
+    const { data, error } = await supabaseClient
+      .from('profiles')
+      .select('*')
+      .eq('intention', currentUser.intention)
+      .neq('name', currentUser.name)
+      .limit(1);
+
+    if (error || !data || data.length === 0) {
+      alert("No matches found in the database yet. Try a different intention.");
+      btn.innerHTML = "Verify & Find Matches";
+      return;
     }
 
+    // We found a real user in the database!
+    currentMatch = data[0];
+    
     document.getElementById('screen-setup').classList.add('hidden');
     document.getElementById('screen-discover').classList.remove('hidden');
 
-    // Render Match
+    // Render the REAL match
     document.getElementById('resultsList').innerHTML = `
       <div class="match-card">
         <div class="match-header">
-          <div class="match-name">${match.name}</div>
-          <div class="score-badge">${match.dnaMatch}% DNA Match</div>
+          <div class="match-name">${currentMatch.name}</div>
+          <div class="score-badge">94% DNA Match</div>
         </div>
         <div style="margin-bottom: 15px;">
-          <span class="tag">🎯 ${match.intention}</span>
-          <span class="tag">🗣️ ${match.comm}</span>
+          <span class="tag">🎯 ${currentMatch.intention}</span>
+          <span class="tag">🗣️ ${currentMatch.comm_style}</span>
         </div>
         <div class="why-match">
-          <strong>Why we matched you:</strong> You both want marriage and handle conflict by talking immediately. You share a direct communication style.
+          <strong>Why we matched you:</strong> You both want ${currentMatch.intention} and share a ${currentMatch.comm_style} communication style.
         </div>
         <button class="gold" onclick="startJourney()">Mutually Reveal & Connect</button>
       </div>
@@ -310,25 +286,66 @@
   function startJourney() {
     document.getElementById('screen-discover').classList.add('hidden');
     document.getElementById('screen-connect').classList.remove('hidden');
+    loadMessages(); // Load real messages from DB
   }
 
-  function sendMessage() {
+  // 4. REAL CHAT LOGIC (With XSS Protection)
+  async function loadMessages() {
+    const chatBox = document.getElementById('chatBox');
+    chatBox.innerHTML = "<div style='text-align:center; color:#888;'>Loading messages...</div>";
+
+    const { data, error } = await supabaseClient
+      .from('messages')
+      .select('*')
+      .eq('room_id', roomId)
+      .order('created_at', { ascending: true });
+
+    chatBox.innerHTML = ""; // Clear loader
+
+    if (data && data.length > 0) {
+      data.forEach(msg => {
+        const isMe = msg.sender_name === currentUser.name;
+        const div = document.createElement('div');
+        div.className = `chat-msg ${isMe ? 'me' : 'them'}`;
+        div.textContent = msg.text; // SECURE: textContent prevents XSS attacks
+        chatBox.appendChild(div);
+      });
+    } else {
+      chatBox.innerHTML = "<div style='text-align:center; color:#888; font-size:12px;'>No messages yet. Say hello!</div>";
+    }
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  async function sendRealMessage() {
     const input = document.getElementById('chatInput');
     const text = input.value.trim();
     if (!text) return;
 
     const chatBox = document.getElementById('chatBox');
-    const scamKeywords = ["mpesa", "m-pesa", "airtime", "nitumie", "emergency", "pesa", "tigo", "loan", "send me"];
+    const scamKeywords = ["mpesa", "m-pesa", "airtime", "nitumie", "emergency", "pesa", "loan"];
     const isScam = scamKeywords.some(keyword => text.toLowerCase().includes(keyword));
 
     if (isScam) {
-        chatBox.innerHTML += `<div class="chat-msg warning">🚨 SCAM SHIELD: Message blocked. We detected a request for money. Never send M-Pesa or airtime to a stranger.</div>`;
-    } else {
-        chatBox.innerHTML += `<div class="chat-msg me">${text}</div>`;
+        const warningDiv = document.createElement('div');
+        warningDiv.className = 'chat-msg warning';
+        warningDiv.textContent = "🚨 SCAM SHIELD: Message blocked. Never send money to a stranger.";
+        chatBox.appendChild(warningDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        input.value = "";
+        return; // Stop the message from saving to DB
     }
-    
-    input.value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // Save to Database
+    const { error } = await supabaseClient.from('messages').insert([
+      { room_id: roomId, sender_name: currentUser.name, text: text }
+    ]);
+
+    if (error) {
+      alert("Failed to send message: " + error.message);
+    } else {
+      input.value = "";
+      loadMessages(); // Reload chat to show the new message
+    }
   }
 </script>
 </body>

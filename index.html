@@ -5,24 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ghost Date | Real Connections. Your Privacy. Your Choice.</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<!-- Load Supabase Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
-    --navy: #0A192F;
-    --burgundy: #6A1B2A;
-    --gold: #D4AF37;
-    --bg: #F8F9FA;
-    --surface: #FFFFFF;
-    --text: #1C1C1E;
-    --text-muted: #6B7280;
-    --border: #E5E7EB;
-    --danger: #DC2626;
+    --navy: #0A192F; --burgundy: #6A1B2A; --gold: #D4AF37;
+    --bg: #F8F9FA; --surface: #FFFFFF; --text: #1C1C1E;
+    --text-muted: #6B7280; --border: #E5E7EB; --danger: #DC2626;
   }
-  
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', sans-serif; }
   body { background: var(--bg); color: var(--text); display: flex; justify-content: center; min-height: 100vh; }
   
-  /* App Container */
-  .app { width: 100%; max-width: 100%; transition: 0.5s ease; }
+  .app { width: 100%; max-width: 100%; }
   .container { max-width: 520px; margin: 0 auto; padding: 20px; }
 
   /* =========================================
@@ -37,7 +31,7 @@
   .waitlist-card h2 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 24px; margin-bottom: 5px; }
   .waitlist-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 25px; }
 
-  /* Forms */
+  /* Forms & Inputs */
   .input-group { margin-bottom: 18px; }
   label { display: block; font-size: 12px; font-weight: 700; color: var(--navy); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
   input, select { width: 100%; padding: 14px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 8px; font-size: 15px; transition: 0.2s; }
@@ -47,17 +41,16 @@
   /* Buttons */
   button { background: var(--burgundy); color: white; border: none; padding: 16px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 10px; }
   button:hover { background: #851F33; transform: translateY(-2px); }
+  button:disabled { background: #9CA3AF; cursor: not-allowed; transform: none; }
   button.gold { background: var(--gold); color: var(--navy); }
   button.gold:hover { background: #C5A028; }
   button.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
-  button.secondary:hover { background: var(--bg); }
   button.premium { background: var(--navy); color: var(--gold); border: 1px solid var(--gold); }
 
   /* =========================================
      VIEW 2 & 3: APP PROTOTYPE (Hidden initially)
   ========================================= */
   #view-app { display: none; padding-top: 20px; background: var(--bg); min-height: 100vh; }
-  
   .brand-header { text-align: center; margin-bottom: 30px; }
   .brand-header h1 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--navy); }
   .brand-header p { color: var(--burgundy); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
@@ -67,15 +60,15 @@
   .card-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--navy); margin-bottom: 5px; }
   .card-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
 
-  /* Match & DNA Cards */
-  .match-card { border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 15px; background: var(--surface); position: relative; overflow: hidden; }
+  /* Match Cards */
+  .match-card { border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 15px; background: var(--surface); }
   .match-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
   .match-name { font-size: 20px; font-weight: 700; color: var(--navy); }
   .score-badge { background: rgba(212, 175, 55, 0.15); color: #927416; padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; border: 1px solid rgba(212, 175, 55, 0.3); }
   .tag { font-size: 12px; background: var(--bg); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px; color: var(--text-muted); display: inline-block; margin-right: 5px; margin-bottom: 5px; }
   .why-match { background: rgba(106, 27, 42, 0.04); padding: 12px; border-radius: 8px; font-size: 13px; border-left: 3px solid var(--burgundy); margin-bottom: 15px; color: var(--text); }
 
-  /* Chat */
+  /* Chat & Scam Shield */
   .chat-box { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; height: 220px; padding: 15px; overflow-y: auto; margin-bottom: 15px; font-size: 14px; }
   .chat-msg { margin-bottom: 12px; padding: 12px 16px; border-radius: 16px; max-width: 85%; line-height: 1.5; }
   .chat-msg.them { background: var(--surface); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
@@ -121,7 +114,7 @@
             </select>
           </div>
 
-          <button type="submit" class="gold">Join Waitlist & Preview App</button>
+          <button type="submit" id="btnWaitlist" class="gold">Join Waitlist & Preview App</button>
         </form>
       </div>
     </div>
@@ -222,13 +215,44 @@
 </div>
 
 <script>
-  // --- WAITLIST LOGIC ---
-  function joinWaitlist(e) {
+  // ==========================================
+  // 1. CONNECT TO YOUR REAL DATABASE (Keys Added)
+  // ==========================================
+  // Note: I removed /rest/v1/ from the URL, as the code needs just the base URL.
+  const SUPABASE_URL = 'https://ssaxnztxgbjvsiklmkys.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_s3UNxyqSrO2A874zW01XZw_ASvPQTAe';
+  
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // ==========================================
+  // 2. WAITLIST LOGIC (Saving to Database)
+  // ==========================================
+  async function joinWaitlist(e) {
     e.preventDefault();
     const name = document.getElementById('wName').value;
+    const phone = document.getElementById('wPhone').value;
     const gender = document.getElementById('wGender').value;
     
-    // Hide waitlist, show app prototype
+    // Change button text to show loading
+    const btn = document.getElementById('btnWaitlist');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = "Saving to database...";
+    btn.disabled = true;
+
+    // Send data to Supabase
+    const { data, error } = await supabaseClient
+      .from('waitlist')
+      .insert([{ first_name: name, phone: phone, gender: gender }]);
+
+    if (error) {
+      console.error(error);
+      alert("Database Error: " + error.message + "\n\nDid you run the SQL script in Supabase to create the 'waitlist' table?");
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      return;
+    }
+
+    // Success! Transition to App Prototype
     document.getElementById('view-waitlist').style.display = 'none';
     document.getElementById('view-app').style.display = 'block';
     
@@ -239,7 +263,9 @@
     window.scrollTo(0, 0);
   }
 
-  // --- APP PROTOTYPE LOGIC ---
+  // ==========================================
+  // 3. APP PROTOTYPE LOGIC
+  // ==========================================
   const match = {
     name: "Amina", intention: "Marriage", 
     dnaMatch: 94, comm: "Direct", conflict: "Talk immediately"
@@ -249,7 +275,6 @@
     const dob = document.getElementById('userDob').value;
     if (!dob) return alert("Please enter your Date of Birth.");
 
-    // Age Verification Math
     const birthDate = new Date(dob);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -263,7 +288,7 @@
     document.getElementById('screen-setup').classList.add('hidden');
     document.getElementById('screen-discover').classList.remove('hidden');
 
-    // Curated Match Rendering
+    // Render Match
     document.getElementById('resultsList').innerHTML = `
       <div class="match-card">
         <div class="match-header">
@@ -287,7 +312,6 @@
     document.getElementById('screen-connect').classList.remove('hidden');
   }
 
-  // Scam Protection (M-Pesa, Airtime, Emergency)
   function sendMessage() {
     const input = document.getElementById('chatInput');
     const text = input.value.trim();
@@ -298,8 +322,7 @@
     const isScam = scamKeywords.some(keyword => text.toLowerCase().includes(keyword));
 
     if (isScam) {
-        chatBox.innerHTML += `<div class="chat-msg warning">🚨 SCAM SHIELD: Message blocked. We detected a request for money. Never send M-Pesa or airtime to a stranger. This incident has been logged.</div>`;
-        // In production, this triggers a backend flag to review the user's account in the Admin Dashboard.
+        chatBox.innerHTML += `<div class="chat-msg warning">🚨 SCAM SHIELD: Message blocked. We detected a request for money. Never send M-Pesa or airtime to a stranger.</div>`;
     } else {
         chatBox.innerHTML += `<div class="chat-msg me">${text}</div>`;
     }
